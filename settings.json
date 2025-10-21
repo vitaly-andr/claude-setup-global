@@ -1,4 +1,9 @@
 {
+  "cleanupPeriodDays": 30,
+  "env": {
+    "EDITOR": "code"
+  },
+  "includeCoAuthoredBy": false,
   "permissions": {
     "allow": [
       "Bash(git status:*)",
@@ -6,6 +11,11 @@
       "Bash(git log:*)",
       "Bash(bun run :*::*)",
       "Bash(ls:*)"
+    ],
+    "deny": [
+      "Read(.env)",
+      "Read(**/.env)",
+      "Read(**/secrets/**)"
     ],
     "ask": [
       "Bash(git push:*)",
@@ -26,19 +36,10 @@
       "Bash(pkill:*)",
       "Write(/etc/**)",
       "Edit(/etc/**)"
-    ],
-    "deny": [
-      "Read(.env)",
-      "Read(**/.env)",
-      "Read(**/secrets/**)"
     ]
   },
-  "env": {
-    "EDITOR": "code"
-  },
-  "includeCoAuthoredBy": false,
-  "cleanupPeriodDays": 30,
   "sandbox": {
     "enabled": false
-  }
+  },
+  "alwaysThinkingEnabled": true
 }
