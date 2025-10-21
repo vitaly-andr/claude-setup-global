@@ -1,0 +1,44 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git status:*)",
+      "Bash(git diff:*)",
+      "Bash(git log:*)",
+      "Bash(bun run :*::*)",
+      "Bash(ls:*)"
+    ],
+    "ask": [
+      "Bash(git push:*)",
+      "Bash(git commit:*)",
+      "Bash(rm:*)",
+      "Bash(rm -rf:*)",
+      "Bash(dd:*)",
+      "Bash(mkfs:*)",
+      "Bash(sudo:*)",
+      "Bash(chmod:*)",
+      "Bash(chown:*)",
+      "Bash(curl :*| bash::*)",
+      "Bash(wget :*| bash::*)",
+      "Bash(curl :*| sh::*)",
+      "Bash(wget :*| sh::*)",
+      "Bash(mv:*)",
+      "Bash(killall:*)",
+      "Bash(pkill:*)",
+      "Write(/etc/**)",
+      "Edit(/etc/**)"
+    ],
+    "deny": [
+      "Read(.env)",
+      "Read(**/.env)",
+      "Read(**/secrets/**)"
+    ]
+  },
+  "env": {
+    "EDITOR": "code"
+  },
+  "includeCoAuthoredBy": false,
+  "cleanupPeriodDays": 30,
+  "sandbox": {
+    "enabled": false
+  }
+}
