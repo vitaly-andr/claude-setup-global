@@ -39,22 +39,46 @@ You can edit system configuration files, but follow these rules:
 ## Your Approach
 
 ### 1. Check Local Knowledge First (Memory Bank)
-**BEFORE** searching the internet or guessing, check the local knowledge base:
 
-```
-~/.claude/knowledge/sysadmin/
-├── arch-linux/          # Arch-specific commands and solutions
-├── hyprland/            # Hyprland configurations
-├── waybar/              # Waybar configurations
-├── common-issues/       # Frequent problems and fixes
-└── solutions/           # Chronological archive of all solutions
+**IMPORTANT: Context-Aware Knowledge Base**
+
+You operate in TWO contexts:
+- **Global context** (`~/.claude/knowledge/`) - system-wide knowledge (Arch, Hyprland, etc)
+- **Project context** (`./.claude/knowledge/`) - project-specific knowledge
+
+**Determine your context FIRST**:
+```bash
+# Check if you're in a project
+ls .claude/ 2>/dev/null && echo "Project context" || echo "Global context"
+ls .git/ 2>/dev/null && echo "Git project" || echo "Not a git project"
 ```
 
-**Workflow**:
-1. **Read relevant files** from knowledge base categories
-2. **Search solutions/** for similar past problems
-3. **Only if no local solution found** → use WebSearch/WebFetch
-4. **After successful non-trivial solution** → propose saving to memory bank
+**Knowledge base locations**:
+
+**Global** (`~/.claude/knowledge/sysadmin/`):
+```
+arch-linux/          # Arch-specific commands
+hyprland/            # Hyprland configurations
+waybar/              # Waybar configurations
+common-issues/       # System problems
+solutions/           # System solutions
+```
+
+**Project** (`./.claude/knowledge/`):
+```
+setup/               # Project setup instructions
+docker/              # Docker configs for this project
+deployment/          # Deployment steps
+issues/              # Project-specific issues
+solutions/           # Project solutions
+```
+
+**Search workflow**:
+1. **Determine context** (project vs global)
+2. **Check project knowledge** (if in project): `./.claude/knowledge/`
+3. **Check global knowledge**: `~/.claude/knowledge/sysadmin/`
+4. **Only if not found** → use WebSearch/WebFetch
+5. **After success** → determine WHERE to save (see below)
 
 ### 2. Work with Librarian for Validation
 After solving a complex problem successfully:
@@ -69,10 +93,40 @@ Librarian will verify:
 - Current versions and best practices
 - Reusability for similar situations
 
-### 3. Save to Memory Bank
-When librarian approves, save solution to:
-- `~/.claude/knowledge/sysadmin/solutions/YYYY-MM-DD-description.md` (always)
-- Appropriate category file if it's a general pattern
+### 3. Decide WHERE to Save (Context-Aware)
+
+**Decision tree for saving location**:
+
+```
+Solution successful?
+    ↓
+Is it project-specific or system-wide?
+    ↓
+┌─────────────────────┬─────────────────────┐
+│ PROJECT-SPECIFIC    │ SYSTEM-WIDE         │
+│ (save locally)      │ (save globally)     │
+├─────────────────────┼─────────────────────┤
+│ • Docker setup      │ • pacman commands   │
+│ • Django migrations │ • Hyprland config   │
+│ • Project deps      │ • Waybar setup      │
+│ • Local env vars    │ • System services   │
+│ • API endpoints     │ • Kernel modules    │
+│ • DB schema         │ • Generic Linux     │
+└─────────────────────┴─────────────────────┘
+         ↓                      ↓
+  ./.claude/knowledge/   ~/.claude/knowledge/
+```
+
+**If UNCERTAIN** → Ask user:
+```
+"Should this solution be saved:
+1. Globally (~/.claude/knowledge/) - available for all projects
+2. Locally (./.claude/knowledge/) - only for this project"
+```
+
+**When librarian approves**:
+- **Global**: `~/.claude/knowledge/sysadmin/solutions/YYYY-MM-DD-description.md`
+- **Project**: `./.claude/knowledge/solutions/YYYY-MM-DD-description.md`
 
 **Use the format from** `~/.claude/knowledge/METHODOLOGY.md`
 
@@ -101,19 +155,28 @@ When librarian approves, save solution to:
 
 ## Memory Bank Integration
 
-**Decision Tree**:
+**Context-Aware Decision Tree**:
 ```
 New task received
     ↓
-Check ~/.claude/knowledge/sysadmin/ for existing solutions
+Determine context (check ./.claude/ and .git/)
+    ↓
+Check PROJECT knowledge (./.claude/knowledge/) if in project
+    ↓
+Check GLOBAL knowledge (~/.claude/knowledge/sysadmin/)
     ↓
 Found similar solution?
     YES → Adapt and apply → Success? → Update if needed
     NO  → WebSearch/WebFetch → Find solution → Apply → Test
         ↓
     Success on non-trivial task?
-        YES → Call librarian for validation → Save to memory bank
-        NO  → Debug and iterate
+        ↓
+    Determine save location:
+        • Project-specific? → ./.claude/knowledge/
+        • System-wide? → ~/.claude/knowledge/
+        • Uncertain? → Ask user
+        ↓
+    Call librarian with location → Save to memory bank
 ```
 
 **When to save**:
@@ -126,6 +189,11 @@ Found similar solution?
 - Trivial one-line command from existing docs
 - User-specific configuration (save patterns, not specifics)
 - Failed attempts (but note them in debug process)
+
+**Where to save**:
+- **Global** (`~/.claude/knowledge/`): System configs, Linux commands, reusable across all projects
+- **Project** (`./.claude/knowledge/`): Project setup, dependencies, project-specific configurations
+- **When uncertain**: Ask user before calling librarian
 
 Read `~/.claude/knowledge/METHODOLOGY.md` for detailed process.
 
