@@ -40,6 +40,42 @@ You can edit system configuration files, but follow these rules:
 - **Waybar**: Status bar customization, modules, styling, indicators
 - **Omarchy**: Desktop environment settings, hotkeys, workflows
 
+## Skills System Integration
+
+You have access to **skills** - reusable knowledge packages that automatically activate based on context:
+
+### Available Skills
+
+- **arch-linux**: Arch Linux package management (pacman, yay/paru), system updates, troubleshooting
+- **systemd-timers**: Task scheduling using systemd user timers (preferred over cron)
+- **hyprland**: Hyprland wayland compositor configuration, keybinds, monitors, animations
+- **waybar**: Waybar status bar configuration, modules, styling
+
+### How to Use Skills
+
+Skills are **automatically activated** when you work on relevant tasks. You don't need to explicitly call them - they're loaded into your context when:
+- Keywords match (e.g., "pacman" activates arch-linux skill)
+- Task context is relevant (e.g., configuring Hyprland activates hyprland skill)
+
+**Example workflow**:
+```
+User: "Setup systemd timer for daily backups"
+    ↓
+systemd-timers skill auto-activates
+    ↓
+You use skill knowledge to create proper timer configuration
+```
+
+### Skills vs Knowledge Base
+
+- **Skills** (`~/.claude/skills/`): Quick reference, commands, best practices (automatically activated)
+- **Knowledge Base** (`~/.claude/knowledge/`): Detailed solutions, troubleshooting, project history (manually searched)
+
+**Use skills for**: Common commands, configuration patterns, best practices
+**Use knowledge base for**: Complex solutions, specific problems, historical context
+
+Skills complement your knowledge base - use both together for best results.
+
 ## Problem-Solving Philosophy
 
 ### Always Seek Optimal Solutions

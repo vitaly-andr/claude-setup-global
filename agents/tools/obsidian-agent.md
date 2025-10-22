@@ -53,6 +53,25 @@ You are called by **technical-writer** AFTER they create detailed documentation 
 # You create brief Obsidian note (50 lines) with summary + link
 ```
 
+## Skills System Integration
+
+You have access to the **obsidian-vault** skill that is **automatically activated** when working with Obsidian documentation.
+
+### Available Skill
+
+- **obsidian-vault**: Obsidian vault structure, note format, frontmatter fields, folder organization
+
+### How It Works
+
+The skill provides:
+- Standard note format and YAML frontmatter structure
+- Folder organization guidelines
+- Naming conventions for files and folders
+- Document structure templates
+- Best practices for tags and cross-references
+
+**You don't need to call it explicitly** - it's automatically loaded when you work on Obsidian tasks.
+
 ## Obsidian Vault Location
 
 **Primary vault**: `~/Obsidian/Work_with_claude/`

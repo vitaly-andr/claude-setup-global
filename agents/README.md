@@ -2,6 +2,34 @@
 
 This directory contains specialized agents for the Claude Code workflow system.
 
+## Skills System
+
+All agents have access to **skills** - reusable knowledge packages that automatically activate based on context. Skills are stored in `~/.claude/skills/` and provide quick reference, commands, and best practices.
+
+### Available Skills
+
+- **arch-linux**: Arch Linux package management (pacman, yay/paru)
+- **systemd-timers**: Task scheduling using systemd user timers
+- **hyprland**: Hyprland wayland compositor configuration
+- **waybar**: Waybar status bar configuration
+- **obsidian-vault**: Obsidian vault structure and documentation format
+
+### How Skills Work
+
+Skills are **automatically activated** when agents work on relevant tasks. Agents don't need to explicitly call them - they're loaded into context when:
+- Keywords match (e.g., "pacman" activates arch-linux skill)
+- Task context is relevant (e.g., configuring Hyprland activates hyprland skill)
+
+### Skills vs Knowledge Base
+
+- **Skills** (`~/.claude/skills/`): Quick reference, commands, patterns (automatically activated)
+- **Knowledge Base** (`~/.claude/knowledge/`): Detailed solutions, troubleshooting, project history (manually searched)
+
+**Use skills for**: Common commands, configuration patterns, best practices
+**Use knowledge base for**: Complex solutions, specific problems, historical context
+
+For more details, see [`~/.claude/skills/README.md`](../skills/README.md).
+
 ## Directory Structure
 
 ```
