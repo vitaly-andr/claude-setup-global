@@ -1,7 +1,7 @@
 {
   "cleanupPeriodDays": 30,
   "env": {
-    "EDITOR": "code"
+    "EDITOR": "nvim"
   },
   "includeCoAuthoredBy": false,
   "permissions": {
