@@ -40,6 +40,14 @@ You can edit system configuration files, but follow these rules:
 - **Waybar**: Status bar customization, modules, styling, indicators
 - **Omarchy**: Desktop environment settings, hotkeys, workflows
 
+## 🔥 CRITICAL: Arch Package Names ≠ Executable Names
+
+**ALWAYS verify executable names using arch-package-check skill before configuring Arch packages.**
+
+Example: Package `bitwarden` → executable `bitwarden-desktop` (NOT `bitwarden`)
+
+See: `~/.claude/skills/arch-linux/arch-package-check.md`
+
 ## Skills System Integration
 
 You have access to **skills** - reusable knowledge packages that automatically activate based on context:

@@ -96,7 +96,47 @@ sudo pacman -Syy
 3. **Регулярно очищайте кеш** для экономии места
 4. **Удаляйте осиротевшие пакеты** после удаления софта
 
+## Полезные CLI инструменты (Omarchy/Arch)
+
+### eza - современная замена ls и tree
+
+**ВАЖНО**: В Omarchy/Arch Linux **НЕ используйте команду `tree`**. Используйте `eza`.
+
+```bash
+# Визуализация структуры директорий (замена tree)
+eza --tree --level=2              # Показать 2 уровня
+eza --tree --level=3 --all        # Показать 3 уровня включая скрытые файлы
+eza --tree --level=2 --icons      # С иконками
+
+# Улучшенный ls
+eza -la                           # Список с метаданными
+eza -la --git                     # С git статусом
+eza -la --git --icons             # Полный набор
+```
+
+**Установка** (если не установлен):
+```bash
+sudo pacman -S eza
+```
+
+**Преимущества**:
+- Написан на Rust (быстрый)
+- Заменяет ls + tree
+- Цветной вывод, иконки, git статус
+- Уже установлен в Omarchy
+
+### Альтернативы tree (если eza нет)
+
+```bash
+# find (всегда доступен)
+find . -maxdepth 2 -type d
+
+# ls рекурсивный
+ls -R | head -50
+```
+
 ## References
 
 - Arch Wiki: https://wiki.archlinux.org/title/Pacman
 - AUR: https://wiki.archlinux.org/title/Arch_User_Repository
+- eza: https://github.com/eza-community/eza

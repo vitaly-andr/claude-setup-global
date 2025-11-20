@@ -44,20 +44,82 @@ These agents support the workflow but are not part of the main pipeline:
 
 ---
 
+## Phase 0: Task Classification (router)
+
+**BEFORE starting the main workflow, classify the task and identify relevant agents/skills.**
+
+**🔍 Router should read diary for context**
+
+Router should check diary at `~/Obsidian/Work_with_claude/01-Diary/` to understand:
+- Recent work history
+- Technologies being used
+- What's already been done
+
+Use the router subagent to:
+
+1. **Check diary** for context (read recent 2-3 entries)
+2. Read descriptions of all available agents
+3. Read descriptions of all available skills
+4. Match the user's request to agent/skill descriptions
+5. Return recommendations
+
+**Request**: $ARGUMENTS
+
+Router will return:
+- **Recommended Agents**: Which agents match this task
+- **Recommended Skills**: Which skills are relevant
+- **Notes**: Brief observations (include diary context if relevant)
+
+**How to use router recommendations:**
+
+- If router recommends **devops** → Consider using devops directly (Task tool) for simple system tasks, or continue with workflow for complex multi-step tasks
+- If router recommends **planner/worker** → Continue with standard workflow
+- If router recommends other specialized agents → Planner should delegate to those agents
+
+**Router does NOT decide complexity or routing - it just matches task to descriptions.**
+
+**After router completes**: Review recommendations and proceed to Phase 1 (Planning).
+
+---
+
 ## Phase 1: Planning (planner)
 
 Use the planner subagent to analyze the request:
 
 **Request**: $ARGUMENTS
 
+**🔍 MANDATORY FIRST STEP: Read the Diary**
+
+Before creating any plan, planner **MUST** read the project diary to understand:
+- What has already been done
+- What documentation exists
+- What problems were solved
+- What remains to be done
+
+**Diary Location**: `~/Obsidian/Work_with_claude/01-Diary/`
+
+**Planner must**:
+1. List all diary entries: `ls -lt ~/Obsidian/Work_with_claude/01-Diary/ | head -10`
+2. Read the most recent 3-5 relevant entries
+3. Identify what has been completed
+4. Identify what documentation exists
+5. Understand the current state
+6. Plan ONLY the remaining work (don't duplicate what's done!)
+
+**Example**: If diary shows "documentation created", don't plan to create documentation again. Plan the actual implementation instead.
+
 Create comprehensive plan with:
 - Executive Summary
+- Diary Analysis (what's already done based on diary)
 - Technical Analysis (with evidence from actual files)
-- Step-by-step implementation plan
+- Step-by-step implementation plan (ONLY remaining work)
 - Acceptance criteria
 - Questions for user
 
 **⚠️ PLANNER RULES**:
+- **MANDATORY**: Read diary FIRST before planning
+- **MANDATORY**: Check what's already done in diary
+- **MANDATORY**: Don't duplicate completed work
 - You may ONLY read files and search codebase
 - You may NOT modify or create any files
 - **MUST** read actual files before making claims
@@ -386,6 +448,78 @@ Decision: [what was chosen]
 Alternatives: [what was considered]
 "
 ```
+
+### 4. Save Completion Report to Diary
+
+**IMPORTANT**: After completing ANY task and providing final message to user, save a brief completion report to Obsidian diary for communication history.
+
+**Location**: `~/Obsidian/Work_with_claude/01-Diary/`
+
+**Filename format**: `YYYY-MM-DD-HH-MM-brief-description.md`
+- Use current timestamp
+- Maximum 4 words for description
+- Lowercase, hyphen-separated
+
+**Example**:
+```bash
+# Get current timestamp
+TIMESTAMP=$(date +"%Y-%m-%d-%H-%M")
+# Create: 2025-10-22-14-30-hyprland-monitor-setup.md
+```
+
+**Report structure**:
+```markdown
+---
+date: YYYY-MM-DD HH:MM
+type: completion-report
+tags: [relevant, tags, here]
+status: completed
+---
+
+# Brief Title (4 words max)
+
+## Задание
+[User's request - 1-2 sentences]
+
+## Что сделано
+- Action 1
+- Action 2
+- Action 3
+
+## Результат
+[Final outcome - 1-2 sentences]
+
+## Файлы
+- `file/path/1`
+- `file/path/2`
+
+## Команды
+```bash
+command 1
+command 2
+```
+
+## Теги
+#tag1 #tag2 #tag3
+
+---
+*Agent: claude*
+```
+
+**When to save**:
+- ✅ After completing tasks with file changes
+- ✅ After workflow completion (all phases done)
+- ✅ After problem solving/troubleshooting
+- ✅ After system configuration
+- ✅ After creating documentation
+
+**When NOT to save**:
+- ❌ Simple Q&A without actions
+- ❌ Reading files without changes
+- ❌ Information search without results
+- ❌ Incomplete tasks (in progress)
+
+**See**: `~/.claude/claude.md` for detailed instructions on diary reports.
 
 ---
 

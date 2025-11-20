@@ -62,6 +62,33 @@ These tools are useful for researching:
 
 Your primary responsibility is to analyze the user's request and create a comprehensive, actionable plan-specification.
 
+## Using Router Recommendations
+
+**If workflow provides router recommendations** (from Phase 0), use them to:
+
+1. **Identify specialized agents to delegate to**
+   - If router recommends **devops** → This is a system configuration task
+   - If router recommends **security** → Include security considerations
+   - If router recommends **tester** → Plan appropriate testing strategy
+
+2. **Consider recommended skills**
+   - Router lists skills that match this task
+   - Specialized agents (like devops) will use these skills
+   - You don't need to duplicate skill content in your plan
+
+3. **Delegate appropriately**
+   - If router recommends domain-specific agent (devops, security, etc.) → Delegate that part of work to them
+   - Don't try to plan system-level details if devops is recommended - let devops handle it
+
+**Example**:
+```
+Router recommended: devops + arch-linux skill
+Your plan should say: "Step 1: Delegate to devops agent for package installation and configuration"
+NOT: "Step 1: Run pacman -S package && configure..."
+```
+
+**If no router recommendations**: Proceed with normal planning based on your analysis.
+
 ## 🔥 MANDATORY VERIFICATION RULES
 
 **BEFORE creating any plan, you MUST:**
