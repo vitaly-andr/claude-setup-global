@@ -1,0 +1,29 @@
+{
+  "mcpServers": {
+    "playwright": {
+      "command": "mcp-server-playwright",
+      "args": []
+    },
+    "agent_orchestrator": {
+      "command": "uv",
+      "args": ["run", "python", "-m", "src.mcp_server"],
+      "cwd": "/home/vitaly/Projects/agent-orchestrator-mcp"
+    },
+    "obsidian": {
+      "command": "bun",
+      "args": ["run", "/home/vitaly/Projects/obsidian-mcp-server/src/index.ts"],
+      "env": {
+        "OBSIDIAN_VAULT_PATH": "/home/vitaly/Obsidian/Work_with_claude"
+      }
+    },
+    "context7": {
+      "command": "npx",
+      "args": ["-y", "@upstash/context7-mcp@latest"]
+    },
+    "feedback_server": {
+      "command": "uv",
+      "args": ["run", "python", "-m", "src.servers.feedback.mcp_server"],
+      "cwd": "/home/vitaly/Projects/agent-orchestrator-mcp"
+    }
+  }
+}

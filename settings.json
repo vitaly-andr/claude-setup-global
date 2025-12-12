@@ -6,6 +6,8 @@
   "includeCoAuthoredBy": false,
   "permissions": {
     "allow": [
+      "WebSearch",
+      "WebFetch",
       "Bash(git status:*)",
       "Bash(git diff:*)",
       "Bash(git log:*)",
@@ -29,6 +31,8 @@
       "Read(**/secrets/**)"
     ],
     "ask": [
+      "Edit(**)",
+      "Write(**)",
       "Bash(git push:*)",
       "Bash(git commit:*)",
       "Bash(rm:*)",
@@ -49,6 +53,7 @@
       "Edit(/etc/**)"
     ]
   },
+  "model": "opus",
   "sandbox": {
     "enabled": false
   },

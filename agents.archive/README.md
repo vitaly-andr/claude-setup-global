@@ -129,6 +129,8 @@ The standard workflow follows this sequence:
 - **MANDATORY** version verification
 - **MUST** independently verify key claims
 - Uses Context7 MCP + WebSearch for validation
+- **Tools**: Read, Grep, Glob, Bash, WebFetch, WebSearch, mcp__context7__*
+- **NEW**: Local verification via Bash (uv pip list, python imports) takes priority over external docs
 
 ### worker
 - **MUST** document errors in detail

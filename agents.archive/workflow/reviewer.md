@@ -7,6 +7,7 @@ tools:
   - Read
   - Grep
   - Glob
+  - Bash
   - mcp__context7__*
 input_format: |
   PLAN_SPECIFICATION: Structured plan from Planner
@@ -199,7 +200,31 @@ You have access to:
 - **WebSearch** - for finding recent updates, security advisories, best practices
 - **WebFetch** - for accessing specific documentation pages
 - **Read/Grep/Glob** - for examining existing project code
+- **Bash** - for verifying local installations (e.g., `uv pip list`, `python -c "import X"`)
 - **MANDATORY**: Use these tools to verify EVERY claim!
+
+## 🔥 LOCAL VERIFICATION (NEW)
+
+**ALWAYS verify installed versions against spec claims:**
+
+```bash
+# Check installed Python packages
+uv pip list | grep -E "package1|package2"
+
+# Verify ONNX Runtime providers
+uv run python -c "import onnxruntime; print(onnxruntime.get_available_providers())"
+
+# Check GPU detection
+/opt/rocm/bin/rocminfo | grep -A5 "Agent 2"
+
+# Verify hardware drivers
+lsmod | grep -E "amdgpu|xdna|rocm"
+```
+
+**Priority order for verification:**
+1. Local installation (`uv pip list`) - MOST ACCURATE
+2. Context7 documentation - MAY BE OUTDATED
+3. Web search - VARIABLE QUALITY
 
 ## What You Receive
 
